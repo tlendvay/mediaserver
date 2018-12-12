@@ -17,6 +17,6 @@ def start(request):
 
 def send_command(request, cmd):
     global proc
-    proc.stdin.write(cmd+'\n')
+    proc.stdin.write(cmd)
     return HttpResponse(request)
 
