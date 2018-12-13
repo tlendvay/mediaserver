@@ -48,7 +48,8 @@ def start(request, num):
         popen_list.append(str(cmd.command))
         for option in options:
             popen_list.append(str(option.option))
-            popen_list.append(str(option.value))
+            if option.value:
+                popen_list.append(str(option.value))
         popen_list.append(str(file_list[file_num][0]))
 
         if proc and proc.poll() == None:
