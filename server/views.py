@@ -45,11 +45,11 @@ def start(request, num):
         cmd = command.objects.get(media=file_list[file_num][1], active=True)
         options = command_options.objects.filter(command=cmd, active=True)
         popen_list = []
-        popen_list.append(cmd.command)
+        popen_list.append(str(cmd.command))
         for option in options:
-            popen_list.append(option.option)
-            popen_list.append(option.value)
-        popen_list.append(file_list[file_num][0])
+            popen_list.append(str(option.option))
+            popen_list.append(str(option.value))
+        popen_list.append(str(file_list[file_num][0]))
 
         if proc and proc.poll() == None:
             proc.kill()
