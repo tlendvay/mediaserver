@@ -1,0 +1,9 @@
+{% if file_list %}
+    <ul>
+    {% for file in file_list %}
+        <li><a href="start/{{ forloop.counter }}/">{{ file.0 }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No files are available.</p>
+{% endif %}
