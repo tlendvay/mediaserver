@@ -54,12 +54,12 @@ def start(request, num):
         if proc and proc.poll() == None:
             proc.kill()
         #proc = Popen("cmd", stdin=PIPE)
-        proc = Popen(popen_list, stdin=PIPE)
+        proc = Popen(popen_list, stdin=PIPE, shell=False)
         return HttpResponse(popen_list)
     return HttpResponse('nok')
 
 def send_command(request, cmd):
     global proc
-    proc.stdin.write(cmd+'\n')
+    proc.stdin.write(cmd)
     return HttpResponse(request)
 
