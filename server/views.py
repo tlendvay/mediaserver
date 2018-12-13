@@ -50,7 +50,7 @@ def start(request, num):
             popen_list.append(option.option)
             popen_list.append(option.value)
         popen_list.append(file_list[file_num][0])
-        #proc = Popen(['omxplayer', '-o', 'hdmi', '/media/pi/USB-HDD/download/Loving.Pablo.2017.BDRip.x264.HuN-No1/loving.pablo.bdrip-no1.mkv'], stdin=PIPE)
+        proc = Popen(['omxplayer', '-o', 'hdmi', '/media/pi/USB-HDD/download/Loving.Pablo.2017.BDRip.x264.HuN-No1/loving.pablo.bdrip-no1.mkv'], stdin=PIPE)
         return HttpResponse(popen_list)
     return HttpResponse('nok')
 
