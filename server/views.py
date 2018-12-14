@@ -7,6 +7,7 @@ from subprocess import PIPE, Popen
 from models import *
 from os import walk, path
 from django.template import loader
+from time import sleep
 
 # Create your views here.
 proc = None
@@ -78,6 +79,7 @@ def send_action(request):
         action = controll.objects.get(command=proc.cmd, action=str(request.POST.get('action')))
         proc.stdin.write(str(action.key))
         response = redirect('/server/')
+        sleep(1)
         return response
     return HttpResponse('nok')
 
