@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if controll_list %}
+    <ul>
+    {% for controll in controll_list %}
+        <li>
+            <form method="post" action="action/">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ controll }}">
+                <button type="submit">{{ controll }}</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No files are available.</p>
+{% endif %}
+
+</body>
+</html>

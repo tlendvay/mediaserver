@@ -21,6 +21,6 @@ from django.conf.urls import include
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.homePageView, name='index'),
-    url(r'^start/(?P<num>[0-9]+)/$', views.start, name='index'),
-    url(r'^cmd/(?P<cmd>[a-zA-Z\_\-0-9\s]+)/$', views.send_command, name='index2'),
+    url(r'^start/$', views.start, name='index'),
+    url(r'^action/$', views.send_action, name='index2'),
 ]

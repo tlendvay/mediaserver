@@ -25,3 +25,8 @@ class file_extension(models.Model):
 
 class media_path(models.Model):
     directory = models.CharField(max_length=250, unique=True, verbose_name="Path")
+
+class controll(models.Model):
+    command = models.ForeignKey(command, null=True)
+    action = models.CharField(max_length=50, unique=True, verbose_name="action")
+    key = models.CharField(max_length=50, null=True, blank=True, verbose_name="Value")

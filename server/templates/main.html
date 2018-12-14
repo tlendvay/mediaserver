@@ -1,9 +1,17 @@
 {% if file_list %}
     <ul>
     {% for file in file_list %}
-        <li><a href="start/{{ forloop.counter }}/">{{ file.0 }}</a></li>
+        <li>
+            <form method="post" action="start/">
+                {% csrf_token %}
+                <input type="hidden" name="name" value="{{ file.0 }}">
+                <input type="hidden" name="id" value="{{ forloop.counter0 }}">
+                {{ file.0 }} <button type="submit">Start</button>
+            </form>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No files are available.</p>
 {% endif %}
+

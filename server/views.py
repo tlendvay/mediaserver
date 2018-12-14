@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from subprocess import PIPE, Popen
 from models import *
@@ -28,6 +28,17 @@ def create_file_list():
 
 
 def homePageView(request):
+    global proc
+    if proc and proc.poll() == None:
+        controll_list = []
+        controlls = controll.objects.filter(command=proc.cmd)
+        for cont in controlls:
+            controll_list.append(cont.action)
+        context = {
+            'controll_list': controll_list
+        }
+        template = loader.get_template('actions.html')
+        return HttpResponse(template.render(context, request))
     global file_list
     create_file_list()
     context = {
@@ -36,11 +47,11 @@ def homePageView(request):
     template = loader.get_template('main.html')
     return HttpResponse(template.render(context, request))
 
-def start(request, num):
+def start(request):
     global proc
     global file_list
-    file_num = int(num)
-    if file_num < len(file_list):
+    if request.method == 'POST':
+        file_num = int(request.POST.get('id'))
 
         cmd = command.objects.get(media=file_list[file_num][1], active=True)
         options = command_options.objects.filter(command=cmd, active=True)
@@ -54,13 +65,19 @@ def start(request, num):
 
         if proc and proc.poll() == None:
             proc.kill()
-        #proc = Popen("cmd", stdin=PIPE)
+            proc.cmd = None
         proc = Popen(popen_list, stdin=PIPE, shell=False)
-        return HttpResponse(popen_list)
+        proc.cmd = cmd
+        response = redirect('/server/')
+        return response
     return HttpResponse('nok')
 
-def send_command(request, cmd):
+def send_action(request):
     global proc
-    proc.stdin.write(cmd)
-    return HttpResponse(request)
+    if request.method == 'POST':
+        action = controll.objects.get(command=proc.cmd, action=str(request.POST.get('action')))
+        proc.stdin.write(str(action.key))
+        response = redirect('/server/')
+        return response
+    return HttpResponse('nok')
 
