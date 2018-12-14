@@ -79,7 +79,7 @@ def send_action(request):
         action = controll.objects.get(command=proc.cmd, action=str(request.POST.get('action')))
         proc.stdin.write(str(action.key))
         response = redirect('/server/')
-        sleep(1)
+        sleep(0.05)
         return response
     return HttpResponse('nok')
 
